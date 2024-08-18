@@ -33,4 +33,12 @@ void draw() {
 
   highlightRow();
   highlightStitch();
+
+  //fill(-26729);
+  //rect(width/2, height/2, 50,50);
+  //fill(-421997);
+  //rect(width/2, height/2+20, 50,50);
 }
+
+// yellow to pink: -12185 -26729
+// yellow to pink: -12432 -421997

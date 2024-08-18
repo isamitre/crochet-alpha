@@ -10,7 +10,7 @@ void calculate() {
   color currColor = get(int(initialX - pps*(currStitch-1)), y);
   int currNumColor = 1;
   int totalColors = 0;
-  int indivColorCheck = 61;
+  int indivColorCheck = 57;
 
   for (float i = currStitch; i <= stitches; i++) {
     // calculate position of curr stitch
@@ -43,7 +43,7 @@ void calculate() {
       println("\t", diffCheck, indivDiffCheck);
     }
 
-    if (diffCheck && indivDiffCheck) {
+    if ((diffCheck && indivDiffCheck) || i==stitches) {
       // write instruction for curr color
       fill(0);
       String instructions = "     (" + nf(currNumColor, 2, 0) + ")";

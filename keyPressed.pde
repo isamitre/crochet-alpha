@@ -1,8 +1,5 @@
 void keyPressed() {
   printed = false;
-  if (keyCode == UP || keyCode == DOWN || keyCode == LEFT || keyCode == RIGHT) {
-    calculated=false;
-  }
   if (keyCode == UP && currRow < rows) {
     currRow++;
   } else if (keyCode == DOWN && currRow > 1) {
