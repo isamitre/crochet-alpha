@@ -14,13 +14,6 @@ float ppr;
 int currRow = 1;
 int currStitch = 1;
 
-boolean calculated = false;
-boolean firstPass = true;
-
-int instrX = 100;
-float instrChangeX = 68.8;
-ArrayList<Integer> rowColors = new ArrayList<Integer>();
-
 void setup() {
   size(564, 283);
   photo = loadImage(imagePath);
@@ -35,10 +28,9 @@ void draw() {
   fill(0);
   image(photo, 00, 20);
   text("Row " + currRow + ", Stitch " + currStitch, 5, 15);
-  
+
   calculate();
 
   highlightRow();
   highlightStitch();
-  
 }

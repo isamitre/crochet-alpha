@@ -1,4 +1,5 @@
 void keyPressed() {
+  printed = false;
   if (keyCode == UP || keyCode == DOWN || keyCode == LEFT || keyCode == RIGHT) {
     calculated=false;
   }
@@ -9,20 +10,14 @@ void keyPressed() {
   } else if (keyCode == LEFT) {
     if (currStitch < stitches) {
       currStitch++;
-    } else if (currRow < rows) {
-      currStitch = 1;
-      currRow++;
     }
   } else if (keyCode == RIGHT) {
     if (currStitch > 1) {
       currStitch--;
-    } else if (currRow > 1){
-      currStitch = stitches;
-      currRow--;
     }
   }
 }
- 
+
 void mouseClicked() {
   fill = get(mouseX, mouseY);
 }
