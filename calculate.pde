@@ -10,43 +10,32 @@ void calculate() {
   int totalColors = 0;
 
   if (!printed)
-    println("x", "currStitch", "currColor", "nextColor");
+    println("x", "\tcurrStitch", "\tcurrColor", "\tnextColor");
 
+  float initialX = int(width - pps/2);
+  color currColor = get(int(initialX - pps*(currStitch-1)), y);
   if (even) {
-    float initialX = int(pps/2);
-    color currColor = get(int(initialX + pps*(currStitch-1)), y);
-    for (float i = currStitch; i > 0; i--) {
-      int x = int(initialX + pps*i);
-      nextColor = get(x, y);
-
-      if (createInstructionsCheck(x, currColor, nextColor) || i==1) {
-        writeInstructions(currNumColor, totalColors, currColor);
-        currNumColor = 0;
-        totalColors++;
-        printChange();
-      }
-      // update variables
-      currColor = nextColor;
-      currNumColor++;
-    }
-  } else {
-    float initialX = int(width - pps/2);
-    color currColor = get(int(initialX - pps*(currStitch-1)), y);
-    for (float i = currStitch; i <= stitches; i++) {
-      int x = int(initialX - pps*i);
-      nextColor = get(x, y);
-
-      if (createInstructionsCheck(x, currColor, nextColor) || i==stitches) {
-        writeInstructions(currNumColor, totalColors, currColor);
-        currNumColor = 0;
-        totalColors++;
-        printChange();
-      }
-      // update variables
-      currColor = nextColor;
-      currNumColor++;
-    }
+    initialX = -pps/2;
+    currColor = get(int(initialX + pps*(currStitch-1)), y);
   }
+  for (float i = currStitch; i <= stitches; i++) {
+    int x = int(initialX - pps*i);
+    if (even) {
+      x = int(initialX + pps*i);
+    }
+    nextColor = get(x, y);
+
+    if (createInstructionsCheck(x, currColor, nextColor) || i==stitches) {
+      writeInstructions(currNumColor, totalColors, currColor);
+      currNumColor = 0;
+      totalColors++;
+      printChange();
+    }
+    // update variables
+    currColor = nextColor;
+    currNumColor++;
+  }
+  //}
 
   if (!printed) {
     println("----------------------------------------------------------\n\n");
@@ -70,6 +59,9 @@ void writeInstructions(int currNumColor, int totalColors, color currColor) {
   strokeWeight(1);
   fill(currColor);
   rect(instrX + totalColors*instrChangeX, 6, pps, ppr);
+  if (!printed) {
+    println(currNumColor);
+  }
 }
 
 boolean createInstructionsCheck(int x, color currColor, color nextColor) {
@@ -95,7 +87,7 @@ boolean createInstructionsCheck(int x, color currColor, color nextColor) {
     || abs(diffBlue) >= indivColorCheck;
 
   if (!printed) {
-    println(x, currStitch, currColor, nextColor);
+    println(x, "\t"+currStitch, "\t\t"+currColor, "\t"+nextColor);
     println("\t", diff, diffRed, diffGreen, diffBlue);
     println("\t", diffCheck, indivDiffCheck);
   }
