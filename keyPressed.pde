@@ -24,5 +24,5 @@ void keyPressed() {
 }
 
 void mouseClicked() {
-  fill = get(mouseX, mouseY);
+  println(get(mouseX, mouseY));
 }

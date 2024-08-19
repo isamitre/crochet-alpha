@@ -1,6 +1,6 @@
 int instrX = 100;
 float instrChangeX = 40;
-int indivColorCheck = 57;
+int indivColorCheck = 46;
 boolean printed = false;
 
 void calculate() {
@@ -35,7 +35,6 @@ void calculate() {
     currColor = nextColor;
     currNumColor++;
   }
-  //}
 
   if (!printed) {
     println("----------------------------------------------------------\n\n");
@@ -44,7 +43,6 @@ void calculate() {
 }
 
 void printChange() {
-  // print
   if (!printed) {
     println("CHANGE");
   }
@@ -81,7 +79,8 @@ boolean createInstructionsCheck(int x, color currColor, color nextColor) {
   float diffGreen = abs(nextGreen - currGreen);
   float diffBlue = abs(nextBlue - currBlue);
 
-  boolean diffCheck = abs(diff) >= 213731;
+  //boolean diffCheck = abs(diff) >= 213731;
+  boolean diffCheck = true;
   boolean indivDiffCheck = abs(diffRed) >= indivColorCheck
     || abs(diffGreen) >= indivColorCheck
     || abs(diffBlue) >= indivColorCheck;
