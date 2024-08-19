@@ -4,40 +4,48 @@ int indivColorCheck = 57;
 boolean printed = false;
 
 void calculate() {
-  float initialX = int(width - pps/2);
   int y = int(height - ppr/2 - ppr*(currRow-1));
-  color currColor = get(int(initialX - pps*(currStitch-1)), y);
+  color nextColor = color(0);
   int currNumColor = 1;
   int totalColors = 0;
 
-  for (float i = currStitch; i <= stitches; i++) {
-    int x = int(initialX - pps*i);
-    color nextColor = get(x, y);
+  if (!printed)
+    println("x", "currStitch", "currColor", "nextColor");
 
-    if (createInstructionsCheck(x, y, currColor, nextColor) || i==stitches) {
-      // write instruction for curr color
-      fill(0);
-      String instructions = "     (" + nf(currNumColor, 2, 0) + ")";
-      text(instructions, instrX+totalColors*instrChangeX, 15);
-      // draw rect for curr color
-      strokeWeight(1);
-      fill(currColor);
-      rect(instrX + totalColors*instrChangeX, 6, pps, ppr);
+  if (even) {
+    float initialX = int(pps/2);
+    color currColor = get(int(initialX + pps*(currStitch-1)), y);
+    for (float i = currStitch; i > 0; i--) {
+      int x = int(initialX + pps*i);
+      nextColor = get(x, y);
 
-      // update variables
-      currNumColor = 0;
-      totalColors++;
-
-      if (!printed) {
-        println("CHANGE");
+      if (createInstructionsCheck(x, currColor, nextColor) || i==1) {
+        writeInstructions(currNumColor, totalColors, currColor);
+        currNumColor = 0;
+        totalColors++;
+        printChange();
       }
+      // update variables
+      currColor = nextColor;
+      currNumColor++;
     }
+  } else {
+    float initialX = int(width - pps/2);
+    color currColor = get(int(initialX - pps*(currStitch-1)), y);
+    for (float i = currStitch; i <= stitches; i++) {
+      int x = int(initialX - pps*i);
+      nextColor = get(x, y);
 
-    // get currColor
-    currColor = nextColor;
-
-    // update count variables
-    currNumColor++;
+      if (createInstructionsCheck(x, currColor, nextColor) || i==stitches) {
+        writeInstructions(currNumColor, totalColors, currColor);
+        currNumColor = 0;
+        totalColors++;
+        printChange();
+      }
+      // update variables
+      currColor = nextColor;
+      currNumColor++;
+    }
   }
 
   if (!printed) {
@@ -46,10 +54,25 @@ void calculate() {
   printed = true;
 }
 
-void writeInstructions() {
+void printChange() {
+  // print
+  if (!printed) {
+    println("CHANGE");
+  }
 }
 
-boolean createInstructionsCheck(int x, int y, color currColor, color nextColor) {
+void writeInstructions(int currNumColor, int totalColors, color currColor) {
+  // write instruction for curr color
+  fill(0);
+  String instructions = "     (" + nf(currNumColor, 2, 0) + ")";
+  text(instructions, instrX+totalColors*instrChangeX, 15);
+  // draw rect for curr color
+  strokeWeight(1);
+  fill(currColor);
+  rect(instrX + totalColors*instrChangeX, 6, pps, ppr);
+}
+
+boolean createInstructionsCheck(int x, color currColor, color nextColor) {
   // get components of currColor
   float currRed = red(currColor);
   float currGreen = green(currColor);

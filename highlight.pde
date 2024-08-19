@@ -11,8 +11,12 @@ void highlightStitch() {
   noFill();
   stroke(0);
   strokeWeight(2);
-  //fill(0);
-  float rectX = width - currStitch*pps;
+  float rectX;
+  if (even) {
+    rectX = (currStitch-1)*pps;
+  } else {
+    rectX = width - currStitch*pps;
+  }
   float rectY = height - currRow*ppr;
   rect(rectX, rectY, pps, ppr);
 }

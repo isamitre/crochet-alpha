@@ -13,6 +13,7 @@ float ppr;
 
 int currRow = 1;
 int currStitch = 1;
+boolean even = currRow % 2 == 0;
 
 void setup() {
   size(564, 283);
@@ -38,6 +39,8 @@ void draw() {
   //rect(width/2, height/2, 50,50);
   //fill(-421997);
   //rect(width/2, height/2+20, 50,50);
+
+  even = currRow % 2 == 0;
 }
 
 // yellow to pink: -12185 -26729
