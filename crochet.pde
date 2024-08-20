@@ -1,12 +1,16 @@
 PImage photo;
 
-String imagePath = "kenough.jpg";
-int imageWidth = 564;
-int imageHeight = 263;
+String imagePath = "peace.jpg";
+int imageWidth = 563;
+int imageHeight = 386;
+
+// kenough.jpg, width=564, height=283
+// peace.jpg, width=563, height=386;
+
 int buffer = 20;
 
-int stitches = 58;
-int rows = 27;
+int stitches = 70;
+int rows = 48;
 
 float pps;
 float ppr;
@@ -16,7 +20,7 @@ int currStitch = 1;
 boolean even = currRow % 2 == 0;
 
 void setup() {
-  size(564, 283);
+  size(563, 406);
   photo = loadImage(imagePath);
   ppr = (float) imageHeight/float(rows);
   pps = (float) imageWidth/float(stitches);

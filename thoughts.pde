@@ -1,8 +1,8 @@
 
 // TODO
-// flip for odd ones
-// improve color detection
-
+// DONE flip for odd ones
+// DONE improve color detection
+// fix off by one on even lines
 
 // FUTURE
 // download pattern
