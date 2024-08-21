@@ -24,6 +24,7 @@ void setup() {
   photo = loadImage(imagePath);
   ppr = (float) imageHeight/float(rows);
   pps = (float) imageWidth/float(stitches);
+  calculateRows();
 }
 
 color fill = color(0);

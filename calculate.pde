@@ -1,5 +1,6 @@
 int instrX = 100;
 float instrChangeX = 40;
+// peace.jpg, indivColorCheck=20, colorCheck=50
 int indivColorCheck = 20;
 int colorCheck = 50;
 boolean printed = false;
@@ -79,44 +80,59 @@ color getAverageColor(int x, int y) {
   return color(newRed, newGreen, newBlue);
 }
 
-void writeInstructions(int currNumColor, int totalColors, color currColor) {
-  // write instruction for curr color
-  fill(0);
-  String instructions = "     (" + nf(currNumColor, 2, 0) + ")";
-  text(instructions, instrX+totalColors*instrChangeX, 15);
-  // draw rect for curr color
-  strokeWeight(1);
-  fill(currColor);
-  rect(instrX + totalColors*instrChangeX, 6, pps, ppr);
+void calculateRows() {
+  int numRows = 0;
+
+  for (int i = 20; i < height-1; i++) {
+    color prevC = get(10, i);
+    color currC = get(10, i+1) ;
+    float prevRed = red(prevC);
+    float prevGreen = green(prevC);
+    float prevBlue = blue(prevC);
+
+    float currRed = red(currC);
+    float currGreen = green(currC);
+    float currBlue = blue(currC);
+
+    float redChange = (currRed - prevRed)/prevRed;
+    float greenChange = (currGreen - prevGreen)/prevGreen;
+    float blueChange = (currBlue - prevBlue)/prevBlue;
+
+    float metric = 0.4;
+    if (redChange > metric && greenChange > metric && blueChange > metric) {
+      numRows++;
+    }
+    prevC = currC;
+  }
+  rows = numRows-2;
 }
 
-boolean createInstructionsCheck(int x, color currColor, color nextColor) {
-  // get currColor components
-  float currRed = red(currColor);
-  float currGreen = green(currColor);
-  float currBlue = blue(currColor);
+void calculateStitches() {
+  int numStitches = 0;
 
-  // get nextColor components
-  float nextRed = red(nextColor);
-  float nextGreen = green(nextColor);
-  float nextBlue = blue(nextColor);
+  for (int i = 0; i < width; i++) {
+    color prevC = get(i, 25);
+    color currC = get(i+1, 25);
 
-  // get diff
-  float diffRed = abs(nextRed - currRed);
-  float diffGreen = abs(nextGreen - currGreen);
-  float diffBlue = abs(nextBlue - currBlue);
-  float diffSum = diffRed + diffGreen + diffBlue;
+    float prevRed = red(prevC);
+    float prevGreen = green(prevC);
+    float prevBlue = blue(prevC);
 
-  //boolean diffCheck = abs(diff) >= 213731;
-  boolean diffCheck = diffSum >= colorCheck;
-  boolean indivDiffCheck = abs(diffRed) >= indivColorCheck
-    || abs(diffGreen) >= indivColorCheck
-    || abs(diffBlue) >= indivColorCheck;
+    float currRed = red(currC);
+    float currGreen = green(currC);
+    float currBlue = blue(currC);
 
-  if (!printed) {
-    println(x, "\t"+currStitch, "\t\t"+currColor, "\t"+nextColor, "\t"+diffSum);
-    println("\t", diffRed, diffGreen, diffBlue, indivDiffCheck);
-    //println("\t", diffCheck, indivDiffCheck);
+    float redChange = (currRed - prevRed)/prevRed;
+    float greenChange = (currGreen - prevGreen)/prevGreen;
+    float blueChange = (currBlue - prevBlue)/prevBlue;
+
+    print((int)currRed, (int)currGreen, (int)currBlue, ",");
+
+    if (currGreen == 0 && currBlue == 0 && redChange > 0.2) {
+      numStitches++;
+    }
+    prevC = currC;
   }
-  return indivDiffCheck || diffCheck;
+  println("numStitches:", numStitches);
+  //stitches = numStitches;
 }
