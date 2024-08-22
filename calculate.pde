@@ -1,5 +1,5 @@
 int instrX = 100;
-float instrChangeX = 40;
+float instrChangeX = 30;
 int indivColorCheck = 20;
 int colorCheck = 50;
 boolean printed = false;
