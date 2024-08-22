@@ -10,13 +10,12 @@ void calculate() {
   int currNumColor = 1;
   int totalColors = 0;
 
-  if (!printed)
-    println("x", "\tcurrStitch", "\tcurrColor", "\tnextColor");
+  //printColumnHeaders();
 
   float initialX = int(width - pps/2);
   color currColor = getAverageColor(int(initialX - pps*(currStitch-1)), y);
   if (even) {
-    initialX = -pps/2;
+    initialX = pps/2;
     currColor = getAverageColor(int(initialX + pps*(currStitch-1)), y);
   }
   for (float i = currStitch; i <= stitches; i++) {
@@ -30,24 +29,15 @@ void calculate() {
       writeInstructions(currNumColor, totalColors, currColor);
       currNumColor = 0;
       totalColors++;
-      printChange();
+      //printChange();
     }
     // update variables
     currColor = nextColor;
     currNumColor++;
   }
 
-  if (!printed) {
-    println("----------------------------------------------------------\n\n");
-  }
+  //printBreak();
   printed = true;
-}
-
-void printChange() {
-  if (!printed) {
-    println("CHANGE");
-    println("x", "\tcurrStitch", "\tcurrColor", "\tnextColor");
-  }
 }
 
 // gets average color of square
@@ -55,9 +45,6 @@ color getAverageColor(int x, int y) {
   int totalNum = 361;
   float radius = pps*0.4;
   color middleColor = get(x, y);
-  if (!printed) {
-    println("\t\t\t\t\t" + middleColor);
-  }
   float redSquareSum = red(middleColor);
   float greenSquareSum = green(middleColor);
   float blueSquareSum = blue(middleColor);
@@ -77,46 +64,4 @@ color getAverageColor(int x, int y) {
   float newBlue = sqrt(blueSquareSum/(totalNum));
 
   return color(newRed, newGreen, newBlue);
-}
-
-void writeInstructions(int currNumColor, int totalColors, color currColor) {
-  // write instruction for curr color
-  fill(0);
-  String instructions = "     (" + nf(currNumColor, 2, 0) + ")";
-  text(instructions, instrX+totalColors*instrChangeX, 15);
-  // draw rect for curr color
-  strokeWeight(1);
-  fill(currColor);
-  rect(instrX + totalColors*instrChangeX, 6, pps, ppr);
-}
-
-boolean createInstructionsCheck(int x, color currColor, color nextColor) {
-  // get currColor components
-  float currRed = red(currColor);
-  float currGreen = green(currColor);
-  float currBlue = blue(currColor);
-
-  // get nextColor components
-  float nextRed = red(nextColor);
-  float nextGreen = green(nextColor);
-  float nextBlue = blue(nextColor);
-
-  // get diff
-  float diffRed = abs(nextRed - currRed);
-  float diffGreen = abs(nextGreen - currGreen);
-  float diffBlue = abs(nextBlue - currBlue);
-  float diffSum = diffRed + diffGreen + diffBlue;
-
-  //boolean diffCheck = abs(diff) >= 213731;
-  boolean diffCheck = diffSum >= colorCheck;
-  boolean indivDiffCheck = abs(diffRed) >= indivColorCheck
-    || abs(diffGreen) >= indivColorCheck
-    || abs(diffBlue) >= indivColorCheck;
-
-  if (!printed) {
-    println(x, "\t"+currStitch, "\t\t"+currColor, "\t"+nextColor, "\t"+diffSum);
-    println("\t", diffRed, diffGreen, diffBlue, indivDiffCheck);
-    //println("\t", diffCheck, indivDiffCheck);
-  }
-  return indivDiffCheck || diffCheck;
 }
