@@ -25,7 +25,7 @@ void calculate() {
     }
     nextColor = getAverageColor(x, y);
 
-    if (createInstructionsCheck(x, currColor, nextColor) || i==stitches) {
+    if (createInstructionsCheck(currColor, nextColor) || i==stitches) {
       writeInstructions(currNumColor, totalColors, currColor);
       currNumColor = 0;
       totalColors++;

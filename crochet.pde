@@ -1,6 +1,9 @@
+import processing.pdf.*;
+
 PImage photo;
 
-String imagePath = "peace.jpg";
+String imageName = "peace";
+String imagePath = imageName + ".jpg";
 int imageWidth = 563;
 int imageHeight = 386;
 
@@ -18,6 +21,8 @@ float ppr;
 int currRow = 1;
 int currStitch = 1;
 boolean even = currRow % 2 == 0;
+
+boolean hasCreatedPattern = false;
 
 void setup() {
   size(563, 406);
@@ -40,4 +45,12 @@ void draw() {
   highlightStitch();
 
   even = currRow % 2 == 0;
+
+  if (!hasCreatedPattern) {
+    beginRecord(PDF, imageName + ".pdf");
+    createPattern();
+    endRecord();
+    hasCreatedPattern = true;
+    //exit();
+  }
 }
