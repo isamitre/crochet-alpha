@@ -5,14 +5,17 @@ int colorCheck = 50;
 boolean printed = false;
 
 void calculate() {
-  int y = int(height - ppr/2 - ppr*(currRow-1));
+  int y = int(imageHeight - ppr/2 - ppr*(currRow-1));
+  if (imageHeight + buffer == height) {
+    y = int(height - ppr/2 - ppr*(currRow-1));
+  }
   color nextColor = color(0);
   int currNumColor = 1;
   int totalColors = 0;
 
   //printColumnHeaders();
 
-  float initialX = int(width - pps/2);
+  float initialX = int(imageWidth - pps/2);
   color currColor = getAverageColor(int(initialX - pps*(currStitch-1)), y);
   if (even) {
     initialX = pps/2;

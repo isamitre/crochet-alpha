@@ -2,18 +2,16 @@ import processing.pdf.*;
 
 PImage photo;
 
-String imageName = "peace";
-String imagePath = imageName + ".jpg";
-int imageWidth = 563;
-int imageHeight = 386;
+BufferedReader reader;
+PImage photo;
 
-// kenough.jpg, width=564, height=283
-// peace.jpg, width=563, height=386;
+String imageName;
+int imageWidth;
+int imageHeight;
+int stitches;
+int rows;
 
 int buffer = 20;
-
-int stitches = 70;
-int rows = 48;
 
 float pps;
 float ppr;
@@ -23,20 +21,28 @@ int currStitch = 1;
 boolean even = currRow % 2 == 0;
 
 boolean hasCreatedPattern = false;
+boolean parsedInputFile = false;
 
 void setup() {
-  size(563, 406);
-  photo = loadImage(imagePath);
-  ppr = (float) imageHeight/float(rows);
-  pps = (float) imageWidth/float(stitches);
+  size(600, 600);
+  reader = createReader("input.txt");
 }
 
-color fill = color(0);
 
 void draw() {
   background(#E3EBFA);
+
+  if (!parsedInputFile) {
+    parseFile();
+    photo = loadImage(imageName + ".jpg");
+    parsedInputFile = true;
+    ppr = (float) imageHeight/float(rows);
+    pps = (float) imageWidth/float(stitches);
+  }
+
+  image(photo, 0, buffer, imageWidth, imageHeight);
+
   fill(0);
-  image(photo, 00, 20);
   text("Row " + currRow + ", Stitch " + currStitch, 5, 15);
 
   calculate();
@@ -51,6 +57,5 @@ void draw() {
     createPattern();
     endRecord();
     hasCreatedPattern = true;
-    //exit();
   }
 }
