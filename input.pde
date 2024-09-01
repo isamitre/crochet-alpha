@@ -6,6 +6,18 @@ void parseFile() {
     String[] imageSizes = split(imageSizeLine, ",");
     imageWidth = int(imageSizes[0]);
     imageHeight = int(imageSizes[1]);
+    float factor;
+
+    // adjust image width/height to fill screen
+    if (imageWidth > imageHeight) {
+      factor = (float) imageWidth/width;
+      imageWidth = width;
+      imageHeight /= factor;
+    } else {
+      factor = (float) imageHeight/(height - buffer);
+      imageHeight = (int) height-buffer;
+      imageWidth /= factor;
+    }
 
     String crochetDetailsLine = reader.readLine();
     String[] crochetDetails = split(crochetDetailsLine, ",");

@@ -7,9 +7,6 @@ int imageHeight;
 int stitches;
 int rows;
 
-// kenough.jpg, width=564, height=283
-// peace.jpg, width=563, height=386;
-
 int buffer = 20;
 
 float pps;
@@ -38,7 +35,7 @@ void draw() {
     pps = (float) imageWidth/float(stitches);
   }
 
-  image(photo, 0, buffer);
+  image(photo, 0, buffer, imageWidth, imageHeight);
 
   fill(0);
   text("Row " + currRow + ", Stitch " + currStitch, 5, 15);
