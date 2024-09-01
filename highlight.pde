@@ -17,7 +17,7 @@ void highlightStitch() {
   } else {
     rectX = imageWidth - currStitch*pps;
   }
-  float rectY = (imageHeight-buffer) - currRow*ppr;
+  float rectY = (imageHeight+buffer) - currRow*ppr;
   if (imageHeight + buffer == height) {
     rectY = height - currRow*ppr;
   }
